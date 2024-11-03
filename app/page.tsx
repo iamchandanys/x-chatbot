@@ -1,7 +1,13 @@
 "use client";
 
 import Chatbot from "./components/Chatbot";
+import ChatbotOverview from "./components/ChatbotOverview";
 
 export default function Home() {
-  return <Chatbot />;
+  return (
+    <div>
+      <ChatbotOverview />
+      <Chatbot />
+    </div>
+  );
 }

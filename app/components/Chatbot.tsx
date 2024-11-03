@@ -101,7 +101,7 @@ const Chatbot = () => {
         {!isOpen && (
           <button
             onClick={toggleChat}
-            className="bg-purple-500 text-white rounded-full p-4 shadow-lg hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="bg-purple-700 text-white rounded-md p-4 shadow-lg transition-transform transform hover:scale-105"
           >
             <FaUserNurse />
           </button>
@@ -203,7 +203,11 @@ const Chatbot = () => {
             <div className="text-center text-xs text-gray-400 p-2 border-t border-gray-200">
               Developed by{" "}
               <span>
-                <a href="https://www.chandanys.in/" target="_blank">
+                <a
+                  href="https://www.chandanys.in/"
+                  target="_blank"
+                  className="underline decoration-gray-400"
+                >
                   Chandan
                 </a>
               </span>{" "}
