@@ -20,7 +20,7 @@ const Suggestions: React.FC<SuggestionsProps> = ({ onClickSuggestion }) => {
           Hi there
         </h1>
         <p className="text-gray-600 mb-3 text-xs">
-          Ask me anything about star health insurance...
+          Ask me anything about star health insurance..
         </p>
         <div className="flex flex-wrap gap-2">
           {suggestionsArray.map((suggestion, index) => (
