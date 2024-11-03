@@ -109,7 +109,7 @@ const Chatbot = () => {
 
         {/* Chat window */}
         {isOpen && (
-          <div className="w-96 h-[36rem] bg-white rounded-lg shadow-2xl flex flex-col mt-2">
+          <div className="w-94 h-[36rem] bg-white rounded-lg shadow-2xl flex flex-col mt-2">
             {/* Header with close button and options */}
             <div className="flex justify-between items-center bg-white text-black p-4 border-b border-gray-200 rounded-t-lg">
               <div className="flex items-center">
