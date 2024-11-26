@@ -5,9 +5,10 @@ import { FaTimes, FaUser, FaUserNurse } from "react-icons/fa";
 import { IoSendSharp } from "react-icons/io5";
 import { ThreeDots } from "react-loader-spinner";
 import Suggestions from "./Suggestions";
+import { chatCompletion, initChat } from "../store/actions";
 
 interface Message {
-  sender: "bot" | "user";
+  sender: "system" | "user";
   text: string;
 }
 
@@ -21,6 +22,8 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   // State to keep track of messages in the chat
   const [messages, setMessages] = useState<Message[]>([]);
+  // State to store the chat ID
+  const [chatId, setChatId] = useState<string>("");
   // State to store the user's current input message
   const [userMessage, setUserMessage] = useState<string>("");
   // State to manage loading indicator
@@ -33,12 +36,22 @@ const Chatbot = () => {
     if (!isOpen) {
       // Make API call to initialize chatbot when opening
       setIsLoading(true);
-      setTimeout(() => {
-        setMessages([
-          { sender: "bot", text: "Hello! How can I assist you today?" },
-        ]);
-        setIsLoading(false);
-      }, 3000);
+      (async () => {
+        await initChat()
+          .then((response) => {
+            setIsLoading(false);
+            // Set initial message from the chatbot
+            setMessages([
+              { sender: "system", text: "Hello! How can I assist you today?" },
+            ]);
+            // Set the chat ID
+            setChatId(response.id);
+          })
+          .catch(() => {
+            setIsLoading(false);
+            alert("Error in initializing chat");
+          });
+      })();
     } else {
       // If closing the chat, clear all state
       setMessages([]);
@@ -60,16 +73,23 @@ const Chatbot = () => {
     setMessages(newMessages);
     setUserMessage("");
 
-    // Simulate API call with delay
+    // Make API call to send the message to chatCompletion
     setIsLoading(true);
-    setTimeout(() => {
-      const botResponse = "This is a dummy response from the API.";
-      setMessages((prevMessages: Message[]) => [
-        ...prevMessages,
-        { sender: "bot", text: botResponse },
-      ]);
-      setIsLoading(false);
-    }, 3000);
+    (async () => {
+      await chatCompletion({ chatId: chatId, message: newMessage })
+        .then((response) => {
+          setIsLoading(false);
+          console.log(response);
+          setMessages((prevMessages: Message[]) => [
+            ...prevMessages,
+            { sender: "system", text: response?.messageContent },
+          ]);
+        })
+        .catch(() => {
+          setIsLoading(false);
+          alert("Error in sending message to chatCompletion");
+        });
+    })();
   };
 
   // Handle sending message on Enter key press
@@ -136,7 +156,7 @@ const Chatbot = () => {
                     message.sender === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {message.sender === "bot" && (
+                  {message.sender === "system" && (
                     <div className="flex items-center">
                       <FaUserNurse className="mr-2 text-lg text-purple-700" />
                       <div className="bg-purple-100 text-black p-3 rounded-lg max-w-xs text-sm">
