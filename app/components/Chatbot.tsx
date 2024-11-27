@@ -6,6 +6,7 @@ import { IoSendSharp } from "react-icons/io5";
 import { ThreeDots } from "react-loader-spinner";
 import Suggestions from "./Suggestions";
 import { chatCompletion, initChat } from "../store/actions";
+import { playAudio } from "./PlaySound";
 
 interface Message {
   sender: "system" | "user";
@@ -40,6 +41,8 @@ const Chatbot = () => {
         await initChat()
           .then((response) => {
             setIsLoading(false);
+            // Play sound when inital message is received
+            playAudio(false);
             // Set initial message from the chatbot
             setMessages([
               { sender: "system", text: "Hello! How can I assist you today?" },
@@ -70,6 +73,8 @@ const Chatbot = () => {
       ...messages,
       { sender: "user", text: newMessage },
     ];
+    // Play sound when user sends a message
+    playAudio(true);
     setMessages(newMessages);
     setUserMessage("");
 
@@ -80,6 +85,8 @@ const Chatbot = () => {
         .then((response) => {
           setIsLoading(false);
           console.log(response);
+          // Play sound when response is received
+          playAudio(false);
           setMessages((prevMessages: Message[]) => [
             ...prevMessages,
             { sender: "system", text: response?.messageContent },
