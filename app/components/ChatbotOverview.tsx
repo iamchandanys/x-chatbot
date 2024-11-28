@@ -156,6 +156,14 @@ const ChatbotOverview = () => {
             derived directly from the document content.
           </li>
           <li>
+            <strong>Cost-Effective:</strong> By leveraging Azure AI Verctor
+            Search, the solution minimizes resource-intensive operations by
+            targeting specific and relevant content rather than analyzing entire
+            documents. This targeted approach significantly reduces
+            computational costs, ensuring a budget-friendly implementation
+            without compromising performance.
+          </li>
+          <li>
             <strong>Efficient Data Retrieval:</strong> The embedding-based
             approach ensures that only the most relevant portions of documents
             are analyzed for each question, providing quick and accurate
