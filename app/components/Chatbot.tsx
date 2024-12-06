@@ -7,6 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import Suggestions from "./Suggestions";
 import { chatCompletion, initChat } from "../store/actions";
 import { playAudio } from "./PlaySound";
+import { getClientAndProductId } from "../utils/helper";
 
 interface Message {
   sender: "system" | "user";
@@ -19,6 +20,8 @@ const Chatbot = () => {
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   `;
 
+  // Get the client and product IDs from the URL parameters
+  const { clientId, productId } = getClientAndProductId();
   // State to manage whether the chatbot is open or closed
   const [isOpen, setIsOpen] = useState<boolean>(false);
   // State to keep track of messages in the chat
@@ -38,7 +41,7 @@ const Chatbot = () => {
       // Make API call to initialize chatbot when opening
       setIsLoading(true);
       (async () => {
-        await initChat()
+        await initChat(clientId, productId)
           .then((response) => {
             setIsLoading(false);
             // Play sound when inital message is received
@@ -81,7 +84,12 @@ const Chatbot = () => {
     // Make API call to send the message to chatCompletion
     setIsLoading(true);
     (async () => {
-      await chatCompletion({ chatId: chatId, message: newMessage })
+      await chatCompletion({
+        chatId: chatId,
+        message: newMessage,
+        clientId,
+        productId,
+      })
         .then((response) => {
           setIsLoading(false);
           console.log(response);

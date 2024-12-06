@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { getAllArticles } from "../store/actions";
+import { getClientAndProductId } from "../utils/helper";
 
 const ChatbotOverview = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [artDocs, setArtDocs] = React.useState([{ name: "", content: "" }]);
+  // Get the client and product IDs from the URL parameters
+  const { clientId, productId } = getClientAndProductId();
 
   useEffect(() => {
     (async () => {
-      await getAllArticles()
+      await getAllArticles(clientId, productId)
         .then((response) => {
           setArtDocs(response);
         })
@@ -16,7 +19,7 @@ const ChatbotOverview = () => {
           alert("Error in fetching articles");
         });
     })();
-  }, []);
+  }, [clientId, productId]);
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 text-gray-800">
