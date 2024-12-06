@@ -1,9 +1,11 @@
 import axios from "axios";
 import { apiUrl } from "./parameters";
 
-export const initChat = async () => {
+export const initChat = async (clientId: string, productId: string) => {
   try {
-    const response = await axios.get(`${apiUrl}XChatBot/InitChat`);
+    const response = await axios.get(
+      `${apiUrl}XChatBot/InitChat/${clientId}/${productId}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -11,8 +13,10 @@ export const initChat = async () => {
 };
 
 export const chatCompletion = async (body: {
-  chatId?: string;
-  message?: string;
+  chatId: string;
+  message: string;
+  clientId: string;
+  productId: string;
 }) => {
   try {
     const response = await axios.post(`${apiUrl}XChatBot/ChatCompletion`, body);
@@ -22,9 +26,11 @@ export const chatCompletion = async (body: {
   }
 };
 
-export const getAllArticles = async () => {
+export const getAllArticles = async (clientId: string, productId: string) => {
   try {
-    const response = await axios.get(`${apiUrl}XChatBot/GetAllArticles`);
+    const response = await axios.get(
+      `${apiUrl}XChatBot/GetAllDocuments/${clientId}/${productId}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
