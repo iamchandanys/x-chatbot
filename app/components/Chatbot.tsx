@@ -6,8 +6,8 @@ import { IoSendSharp } from "react-icons/io5";
 import { ThreeDots } from "react-loader-spinner";
 import Suggestions from "./Suggestions";
 import { chatCompletion, initChat } from "../store/actions";
-import { playAudio } from "./PlaySound";
-import { getClientAndProductId } from "../utils/helper";
+import { getClientAndProductId, playAudio } from "../utils/helper";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   sender: "system" | "user";
@@ -175,7 +175,7 @@ const Chatbot = () => {
                     <div className="flex items-center">
                       <FaUserNurse className="mr-2 text-lg text-purple-700" />
                       <div className="bg-purple-100 text-black p-3 rounded-lg max-w-xs text-sm">
-                        {message.text}
+                        <ReactMarkdown>{message.text}</ReactMarkdown>
                       </div>
                     </div>
                   )}
