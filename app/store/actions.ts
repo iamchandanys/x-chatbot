@@ -22,7 +22,7 @@ export const chatCompletion = async (body: {
     const response = await axios.post(`${apiUrl}XChatBot/ChatCompletion`, body);
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 };
 
@@ -33,7 +33,7 @@ export const getAllArticles = async (clientId: string, productId: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 };
 
@@ -44,7 +44,7 @@ export const getSuggestions = async (clientId: string, productId: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 };
 
@@ -55,6 +55,6 @@ export const getClientDetails = async (clientId: string, productId: string) => {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 };
