@@ -8,13 +8,18 @@ import Suggestions from "./Suggestions";
 import { chatCompletion, initChat } from "../store/actions";
 import { getClientAndProductId, playAudio } from "../utils/helper";
 import ReactMarkdown from "react-markdown";
+import { ClientDetails } from "../models/client-details.model";
 
 interface Message {
   sender: "system" | "user";
   text: string;
 }
 
-const Chatbot = () => {
+interface ChatbotProps {
+  clientDetails: ClientDetails | null;
+}
+
+const Chatbot: React.FC<ChatbotProps> = ({ clientDetails }) => {
   const style = `
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -150,7 +155,7 @@ const Chatbot = () => {
               <div className="flex items-center">
                 <FaUserNurse className="text-2xl mr-2" />
                 <span className="font-semibold text-lg">
-                  Star Insurance Assistant
+                  {clientDetails?.botName}
                 </span>
               </div>
               <div className="flex items-center space-x-4">

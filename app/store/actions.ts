@@ -47,3 +47,14 @@ export const getSuggestions = async (clientId: string, productId: string) => {
     console.error(error);
   }
 };
+
+export const getClientDetails = async (clientId: string, productId: string) => {
+  try {
+    const response = await axios.get(
+      `${apiUrl}XChatBot/GetClientDetails/${clientId}/${productId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
